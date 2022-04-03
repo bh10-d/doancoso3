@@ -1,5 +1,6 @@
 package com.example.chatapp
 
+import android.app.Activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -7,9 +8,10 @@ import android.util.Log
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import com.google.firebase.auth.FirebaseAuth
 
-class MainActivity : AppCompatActivity() {
+class RegisterActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -22,12 +24,29 @@ class MainActivity : AppCompatActivity() {
             Log.d("MainActivity","Try to show login activity")
 
             //launch login activity
-
-
             val intent = Intent(this, LoginActivity::class.java)
             startActivity(intent)
         }
+        val selectphoto_button_register = findViewById<Button>(R.id.selectphoto_button_register)
+        selectphoto_button_register.setOnClickListener {
+            Log.d("MainAcivity", "try to show photo selector")
+            val intent = Intent(Intent.ACTION_PICK)
+            intent.type = "image/*"
+            getResult.launch(intent)
+        }
     }
+
+    //handle
+    private val getResult =
+        registerForActivityResult(
+            ActivityResultContracts.StartActivityForResult()
+        ) {
+            if (it.resultCode == Activity.RESULT_OK) {
+                val value = it.data?.getStringExtra("input")
+            }
+        }
+
+
     private fun perFormRegister(){
         val email = findViewById<TextView>(R.id.email_edittext_register).text.toString();
         val password = findViewById<TextView>(R.id.password_edittext_register).text.toString();

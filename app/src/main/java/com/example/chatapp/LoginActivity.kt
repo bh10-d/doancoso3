@@ -22,7 +22,7 @@ class LoginActivity: AppCompatActivity() {
         val toResgister = findViewById<TextView>(R.id.back_register)
         toResgister.setOnClickListener {
             Log.d("MainActivity","back to register")
-            val intent = Intent(this, MainActivity::class.java)
+            val intent = Intent(this, RegisterActivity::class.java)
             startActivity(intent)
         }
     }
